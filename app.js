@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Add request injections before routes
 app.use(function(req, res, next) {
     req.mongoose = mongoose;
-    req.twilio;
+    req.twilio = twilio;
 });
 
 app.use('/', routes);
