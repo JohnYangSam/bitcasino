@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var twilio = require('twilio');
+var twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKENW);
 var utilities = require('../utilities');
 
 /* Redirect based on response . */
 router.post('/', function(req, res) {
   // Validate request is from twilio
-  //if (twilio.validateExpressRequest(req, process.env.TWILIO_AUTH_TOKENW)) {
+  if (twilio.validateExpressRequest(req, process.env.TWILIO_AUTH_TOKENW)) {
 
     console.log("--------Got here----------");
     var body = req.param('Body').trim();
@@ -26,11 +26,11 @@ router.post('/', function(req, res) {
     console.log("--------sent back----------");
 
     res.send(twiml.toString());
-    //res.send('wowo');
-  //} else {
-  //  console.log("--------bad request----------");
-  //  res.send('Request did not come from Twilio. Please go away.');
- // }
+
+  } else {
+    console.log("--------bad request----------");
+    res.send('Request did not come from Twilio. Please go away.');
+  }
 
 });
 
