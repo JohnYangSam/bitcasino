@@ -25,11 +25,6 @@ router.post('/', function(req, res) {
     var twiml = new twilio.TwimlResponse();
 
     switch(body) {
-      case 
-      case
-      case
-      case
-      case
       case "options":
         twiml.sms(helpMessage);
         break;
