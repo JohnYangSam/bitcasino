@@ -7,7 +7,7 @@ var helpMessage = "Actions:\n" +
           "balance\n" +
           "bet <# satoshi>\n" +
           "roll\n" +
-          "widthraw <# satoshi>"+
+          "widthraw <# satoshi>\n\n"+
           "Send to XX address to deposit";
 
 /* Redirect based on response . */
@@ -26,10 +26,10 @@ router.post('/', function(req, res) {
 
     switch(body) {
       case "options":
-        twiml.sms(helpMessage);
+        twiml.sms("\n\n" + helpMessage);
         break;
       default:
-        twmil.sms("Unknown Command:\n" + helpMessage);
+        twmil.sms("\n\nUnknown Command:\n" + helpMessage);
         break;
     }
 
