@@ -28,7 +28,7 @@ router.post('/', function(req, res) {
       if (err) {
         console.log("Error looking up user " + err);
       } else {
-        console.log(user);
+        console.log("users is here" + user);
       }
     });
 
