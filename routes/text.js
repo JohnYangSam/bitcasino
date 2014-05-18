@@ -26,10 +26,11 @@ router.post('/', function(req, res) {
 
     switch(body) {
       case "options":
-        twiml.sms("\n\n" + helpMessage);
+        twiml.sms("\n" + helpMessage);
         break;
+        
       default:
-        twmil.sms("\n\n" + helpMessage);
+        twiml.sms("\n\nUnknown Command:\n" + helpMessage);
         break;
     }
 
