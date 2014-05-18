@@ -7,7 +7,7 @@ var helpMessage = "Actions:\n" +
           "bet <# satoshi>\n" +
           "roll\n" +
           "withdraw <# satoshi>\n\n"+
-          "Send to XX address to deposit";
+          "Send to XX address to deposit.";
 
 /* Redirect based on response . */
 router.post('/', function(req, res) {
