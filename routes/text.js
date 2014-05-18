@@ -28,7 +28,27 @@ router.post('/', function(req, res) {
       if (err) {
         console.log("Error looking up user " + err);
       } else {
+
+        // Create a new User
+        if (user === null) {
+          var newUser = new User({
+            number: from,
+            balance: 0,
+            btcAddress:
+          });
+          newUser.save(function(err, user, numberAffected) {
+            console.log("Error saving new user.")
+          });
+
+        // Otherwise, parse the commands
+        } else {
+
+        }
+
         console.log("users is here" + user);
+
+        //
+
       }
     });
 
