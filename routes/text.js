@@ -36,9 +36,10 @@ router.post('/', function(req, res) {
             balance: 0,
             btcAddress:
           });
-          newUser.save(function(err, user, numberAffected) {
+          newUser.save(function(err, user) {
             console.log("Error saving new user.")
           });
+          console.log(newUser);
 
         // Otherwise, parse the commands
         } else {
