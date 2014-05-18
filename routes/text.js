@@ -30,14 +30,14 @@ router.post('/', function(req, res) {
       case
       case
       case
-      case "help":
+      case "options":
         twiml.sms(helpMessage);
         break;
       default:
         twmil.sms("Unknown Command:\n" + helpMessage);
         break;
     }
-    
+
     console.log(twiml);
     console.log("--------sent back----------");
 
