@@ -7,7 +7,7 @@ var helpMessage = "Actions:\n" +
           "balance\n" +
           "bet <# satoshi>\n" +
           "roll\n" +
-          "widthraw <# satoshi>\n\n"+
+          "withdraw <# satoshi>\n\n"+
           "Send to XX address to deposit";
 
 /* Redirect based on response . */
@@ -19,6 +19,7 @@ router.post('/', function(req, res) {
 
     // Extract body parameters
     var body = req.param('Body').trim();
+    body = body.toLowerCase();
     var to = req.param('To').trim();
     var from = req.param('From').trim();
 
@@ -28,9 +29,9 @@ router.post('/', function(req, res) {
       case "options":
         twiml.sms("\n" + helpMessage);
         break;
-        
+
       default:
-        twiml.sms("\n\nUnknown Command:\n" + helpMessage);
+        twiml.sms("\n\n(Unknown Command)\n" + helpMessage);
         break;
     }
 

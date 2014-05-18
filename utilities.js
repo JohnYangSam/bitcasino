@@ -18,3 +18,5 @@ utils.isInt = function (string) {
   var intRegex = /^\d+$/;
   return intRegex.test(string);
 }
+
+module.exports = utils;
