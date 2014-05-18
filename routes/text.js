@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var utilities = require('../utilities');
+var User = require('../models/user.js');
 
 var helpMessage = "Actions:\n" +
           "balance\n" +
@@ -21,6 +22,16 @@ router.post('/', function(req, res) {
     body = body.toLowerCase();
     var to = req.param('To').trim();
     var from = req.param('From').trim();
+
+    // Check if user exists. Create a user if not
+    User.findByNumber(from, function(err, user) {
+      if (err) {
+        console.log("Error looking up user " + err);
+      } else {
+        console.log(user);
+      }
+    };
+
 
     // Create a new Twmil response
     var twiml = new req.twilio.TwimlResponse();

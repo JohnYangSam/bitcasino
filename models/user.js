@@ -8,7 +8,7 @@ var userSchema = new mongoose.Schema({
 
 // Find a user by number
 userSchema.statics.findByNumber = function(number, cb) {
-  return this.find({ number: number}, cb);
+  return this.findOne({ number: number}, cb);
 };
 
 // Check a user's balance is valid
