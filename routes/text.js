@@ -7,8 +7,8 @@ var utilities = require('../utilities');
 /* Redirect based on response . */
 router.post('/', function(req, res) {
   var body = req.param('Body').trim();
-  var to = req.param('To');
-  var from = req.param('From').trime();
+  var to = req.param('To').trim();
+  var from = req.param('From').trim();
 
   switch(body) {
     default:
