@@ -16,7 +16,7 @@ app.set('view engine', 'jade');
 
 // set Twilio configurations
 // twilio_sid and twilio_auth_token are set by env in bin/www
-var twilio = require('twilio')(app.get('twilio_sid', app.get('twilio_auth_token'));
+var twilio = require('twilio')(app.get('twilio_sid'), app.get('twilio_auth_token'));
 app.set('twilio', twilio);
 
 app.use(favicon());
