@@ -7,8 +7,8 @@ var bodyParser = require('body-parser');
 
 // Additional request injections
 var mongoose = require('mongoose');
-var mongoUri = process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL;
+var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL
+               || 'mongodb://localhost/bitcasino';
 mongoose.connect(mongoUri, function (err, res) {
     if (err) {
         console.log("Error connection to " + mongoUri + " " + err + ".");

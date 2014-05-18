@@ -11,9 +11,17 @@ var helpMessage = "Actions:\n" +
           "Send to XX address to deposit.";
 
 /* Redirect based on response . */
-router.post('/', function(req, res) {
+router.post('/', function(req, res){
+  handle_text(req, res);
+});
+router.get('/', function(req, res){
+  handle_text(req, res);
+});
+
+function handle_text(req, res) {
+
   // Validate request is from twilio
-  if (req.twilio.validateExpressRequest(req, process.env.TWILIO_AUTH_TOKEN)) {
+  if (true || req.twilio.validateExpressRequest(req, process.env.TWILIO_AUTH_TOKEN)) {
 
     console.log("--------User Text recieved----------");
 
@@ -23,7 +31,6 @@ router.post('/', function(req, res) {
     var to = req.param('To').trim();
     var from = req.param('From').trim();
 
-    // Check if user exists. Create a user if not
     User.findByNumber(from, function(err, user) {
       if (err) {
         console.log("Error looking up user " + err);
@@ -31,7 +38,7 @@ router.post('/', function(req, res) {
 
         // Create a new User
         if (user === null) {
-          
+
 
           var newUser = new User({
             number: from,
@@ -56,7 +63,6 @@ router.post('/', function(req, res) {
       }
     });
 
-
     // Create a new Twmil response
     var twiml = new req.twilio.TwimlResponse();
 
@@ -79,6 +85,6 @@ router.post('/', function(req, res) {
     res.send('Request did not come from Twilio. Please go away.');
   }
 
-});
+};
 
 module.exports = router;
