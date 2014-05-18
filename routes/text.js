@@ -7,8 +7,19 @@ var utilities = require('../utilities');
 /* Redirect based on response . */
 router.post('/', function(req, res) {
   var body = req.param('Body').trim();
-  console.log(body);
+  var to = req.param('To');
+  var from = req.param('From').trime();
+
+  switch(body) {
+    default:
+      client.sendMessage({
+        to: to,
+        from: from,
+        body: "this is a test"
+      });
+      break
+  }
+  console.log("sent back");
+
 });
-
-
 module.exports = router;
