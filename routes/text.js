@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKENW);
+var twilio = require('twilio');
 var utilities = require('../utilities');
 
 /* Redirect based on response . */
 router.post('/', function(req, res) {
   // Validate request is from twilio
+  console.log(req);
+  console.log (process.env.TWILIO_AUTH_TOKEN);
   if (twilio.validateExpressRequest(req, process.env.TWILIO_AUTH_TOKEN)) {
 
     console.log("--------Got here----------");
