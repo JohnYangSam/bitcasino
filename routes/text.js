@@ -17,9 +17,9 @@ router.post('/', function(req, res) {
         from: from,
         body: "this is a test"
       });
-      break
+      break;
   }
-  console.log("sent back");
+  console.log("--------sent back----------");
 
 });
 module.exports = router;
