@@ -10,9 +10,16 @@ router.post('/', function(req, res) {
   var to = req.param('To').trim();
   var from = req.param('From').trim();
 
+
+  client.sendMessage({
+        to: to,
+        from: from,
+        body: "this is a test"
+      });
+
   switch(body) {
     default:
-    console.log("default hit");
+      console.log("default hit");
       client.sendMessage({
         to: to,
         from: from,
