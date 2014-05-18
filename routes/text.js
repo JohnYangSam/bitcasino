@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var utilities = require('../utilities');
-var User = require('../models/user.js');
+var User = require('../models/user');
 
 var helpMessage = "Actions:\n" +
           "balance\n" +
@@ -30,7 +30,7 @@ router.post('/', function(req, res) {
       } else {
         console.log(user);
       }
-    };
+    });
 
 
     // Create a new Twmil response
