@@ -29,7 +29,7 @@ router.post('/', function(req, res) {
         twiml.sms("\n\n" + helpMessage);
         break;
       default:
-        twmil.sms("\n\nUnknown Command:\n" + helpMessage);
+        twmil.sms("\n\n" + helpMessage);
         break;
     }
 
