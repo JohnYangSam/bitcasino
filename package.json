@@ -1,9 +1,12 @@
 {
-  "name": "application-name",
+  "name": "bitcasino",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
+  },
+  "engines": {
+    "node": "0.11.9"
   },
   "dependencies": {
     "express": "~4.0.0",
@@ -12,6 +15,29 @@
     "cookie-parser": "~1.0.1",
     "body-parser": "~1.0.0",
     "debug": "~0.7.4",
-    "jade": "~1.3.0"
-  }
+    "jade": "~1.3.0",
+    "logfmt": "~1.1.2"
+  },
+  "description": "bitcasino ========= Bitcasino Symsys150.",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JohnYangSam/bitcasino.git"
+  },
+  "keywords": [
+    "bitcoin",
+    "casino",
+    "gambling",
+    "game",
+    "text",
+    "txt",
+    "sms"
+  ],
+  "author": "John YS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JohnYangSam/bitcasino/issues"
+  },
+  "homepage": "https://github.com/JohnYangSam/bitcasino"
 }
