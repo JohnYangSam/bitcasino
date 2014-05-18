@@ -12,13 +12,18 @@ var helpMessage = "Actions:\n" +
 
 /* Redirect based on response . */
 router.post('/', function(req, res){
-  handle_text(req, res);
+  handleText(req, res);
 });
 router.get('/', function(req, res){
-  handle_text(req, res);
+  /*
+  req.to = "000 000 0000";
+  req.from = "111 111 1111";
+  req.body = "tester";
+  */
+  handleText(req, res);
 });
 
-function handle_text(req, res) {
+function handleText(req, res) {
 
   // Validate request is from twilio
   if (true || req.twilio.validateExpressRequest(req, process.env.TWILIO_AUTH_TOKEN)) {
@@ -26,65 +31,80 @@ function handle_text(req, res) {
     console.log("--------User Text recieved----------");
 
     // Extract body parameters
-    var body = req.param('Body').trim();
-    body = body.toLowerCase();
-    var to = req.param('To').trim();
-    var from = req.param('From').trim();
+    req.body = req.param('Body').trim().toLowerCase();
+    req.to = req.param('To').trim();
+    req.from = req.param('From').trim();
 
-    User.findByNumber(from, function(err, user) {
+    // Look up user
+    User.findByNumber(req.from, function(err, user) {
+      req.user = user;
+      // Error on look up
       if (err) {
         console.log("Error looking up user " + err);
-      } else {
 
-        // Create a new User
-        if (user === null) {
+      // If there is no user
+      } else if (req.user === null) {
+        createUser(req, res, function(req, res) {
+          sendSmsMessage(req, "Welcome to Bitcasino!\n\n + helpMessage");
+        });
 
-
-          var newUser = new User({
-            number: from,
-            balance: 0,
-            btcAddress: "something"
-          });
-          newUser.save(function(err, user) {
-            if (err) {
-              console.log("Error saving new user." + err);
-            } else {
-              console.log("Successfully saved new user." + user);
-            }
-          });
-          console.log(newUser);
-
-        // Otherwise, parse the commands
-        } else {
-
-        }
-        console.log("users is here" + user);
-        //
+      } else { // There is an existing user
+        respondToCommand(req, res);
       }
     });
-
-    // Create a new Twmil response
-    var twiml = new req.twilio.TwimlResponse();
-
-    switch(body) {
-      case "options":
-        twiml.sms("\n" + helpMessage);
-        break;
-
-      default:
-        twiml.sms("\n\n(Unknown Command)\n" + helpMessage);
-        break;
-    }
-
-    console.log("--------Twiml response sending back ----------");
-    console.log(twiml);
-    res.send(twiml.toString());
 
   } else {
     console.log("--------Request from non Twilio Server----------");
     res.send('Request did not come from Twilio. Please go away.');
   }
+}
 
-};
+// Create a new User
+function createUser(req, res, cb) {
+
+  var newUser = new User({
+    number: req.from,
+    balance: 0,
+    btcAddress: "something"
+  });
+
+  newUser.save(function(err, user) {
+    if (err) {
+      console.log("Error saving new user." + err);
+
+    } else {
+      req.user = user;
+      console.log("Successfully saved new user." + user);
+      // Execute the next callback
+      if (cb) cb(req, res);
+    }
+  });
+}
+
+// Responds to a command
+function respondToCommand(req, res) {
+  var msg = "";
+
+  switch(req.body) {
+    case "options":
+      msg = "\n" + helpMessage;
+      break;
+
+    default:
+      msg = "\n\n(Unknown Command)\n" + helpMessage;
+      break;
+  }
+  sendSmsMessage(res, msg);
+}
+
+// Respond by sending a Twmil sms message response
+function sendSmsMessage(res, msg) {
+  // Create new Twmil response  
+  var twiml = new req.twilio.TwimlResponse();
+  twiml.sms(msg);
+  console.log("--------Twiml response sending back ----------");
+  console.log(twiml);
+  res.send(twiml.toString());
+}
 
 module.exports = router;
