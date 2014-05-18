@@ -25,8 +25,8 @@ router.post('/', function(req, res) {
     console.log(twiml);
     console.log("--------sent back----------");
 
-    //res.send(twiml);
-    res.send('wowo');
+    res.send(twiml);
+    //res.send('wowo');
   //} else {
   //  console.log("--------bad request----------");
   //  res.send('Request did not come from Twilio. Please go away.');
