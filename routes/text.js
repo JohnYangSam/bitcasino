@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/* Redirect based on response . */
 router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
