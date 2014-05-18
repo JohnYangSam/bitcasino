@@ -37,7 +37,11 @@ router.post('/', function(req, res) {
             btcAddress: "something"
           });
           newUser.save(function(err, user) {
-            console.log("Error saving new user." + err);
+            if (err) {
+              console.log("Error saving new user." + err);
+            } else {
+              console.log("Successfully saved new user." + user);
+            }
           });
           console.log(newUser);
 
