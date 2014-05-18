@@ -6,31 +6,29 @@ var utilities = require('../utilities');
 
 /* Redirect based on response . */
 router.post('/', function(req, res) {
-  var body = req.param('Body').trim();
-  var to = req.param('To').trim();
-  var from = req.param('From').trim();
+  // Validate request is from twilio
+  if (twilio.validateExpressRequest(req, process.env.TWILIO_AUTH_TOKENW)) {
 
+    var body = req.param('Body').trim();
+    var to = req.param('To').trim();
+    var from = req.param('From').trim();
 
-console.log(body);
-console.log(to);
-console.log(from);
-  client.sendMessage({
-        to: to,
-        from: from,
-        body: "this is a test"
-      });
+    var twiml = new twilio.TwimlResponse();
 
-  switch(body) {
-    default:
-      console.log("default hit");
-      client.sendMessage({
-        to: to,
-        from: from,
-        body: "this is a test"
-      });
-      break;
+    switch(body) {
+      default:
+
+        console.log("default hit");
+        twiml.sms("this is a test");
+        break;
+    }
+    console.log(twiml);
+    console.log("--------sent back----------");
+
+    res.send(twiml);
+  } else {
+    res.send('Request did not come from Twilio. Please go away.');
   }
-  console.log("--------sent back----------");
 
 });
 module.exports = router;
