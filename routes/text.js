@@ -6,7 +6,7 @@ var utilities = require('../utilities');
 /* Redirect based on response . */
 router.post('/', function(req, res) {
   // Validate request is from twilio
-  if (twilio.validateExpressRequest(req, process.env.TWILIO_AUTH_TOKENW)) {
+  if (twilio.validateExpressRequest(req, process.env.TWILIO_AUTH_TOKEN)) {
 
     console.log("--------Got here----------");
     var body = req.param('Body').trim();
