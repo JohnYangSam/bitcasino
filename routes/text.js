@@ -12,6 +12,7 @@ router.post('/', function(req, res) {
 
   switch(body) {
     default:
+    console.log("default hit");
       client.sendMessage({
         to: to,
         from: from,
