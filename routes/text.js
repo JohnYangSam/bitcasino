@@ -6,6 +6,7 @@ var client = new twilio.RestClient(process.env.TWILIO_SID, process.env.TWILIO_AU
 /* Redirect based on response . */
 router.post('/', function(req, res) {
   var body = req.param('Body').trime();
+  consol.log(body);
   res.send(body);
 });
 
