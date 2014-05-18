@@ -5,6 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// Additional request injections
+var mongoose = require('mongoose');
+mongoose.connect(process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL);
+
+var twilio = require('twilio');
+
 var routes = require('./routes/index');
 var text = require('./routes/text');
 var users = require('./routes/users');
@@ -15,17 +22,18 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// set Twilio configurations
-// twilio_sid and twilio_auth_token are set by env in bin/www
-//var twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
-//app.set('twilio', twilio);
-
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Add request injections before routes
+app.use(function(req, res, next) {
+    req.mongoose = mongoose;
+    req.twilio;
+});
 
 app.use('/', routes);
 app.use('/text', text)
