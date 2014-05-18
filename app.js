@@ -7,8 +7,15 @@ var bodyParser = require('body-parser');
 
 // Additional request injections
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL);
+var mongoUri = process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL;
+mongoose.connect(mongoUri, function (err, res) {
+    if (err) {
+        console.log("Error connection to " + mongoUri + " " + err + ".");
+    } else {
+        console.log("Successfully connected to " + mongoUri + ".");
+    }
+}
 
 var twilio = require('twilio');
 
@@ -33,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
     req.mongoose = mongoose;
     req.twilio = twilio;
+    next();
 });
 
 app.use('/', routes);
@@ -66,7 +74,7 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
-        error: err
+        error: {}
     });
 });
 
