@@ -31,6 +31,8 @@ router.post('/', function(req, res) {
 
         // Create a new User
         if (user === null) {
+          
+
           var newUser = new User({
             number: from,
             balance: 0,
@@ -49,11 +51,8 @@ router.post('/', function(req, res) {
         } else {
 
         }
-
         console.log("users is here" + user);
-
         //
-
       }
     });
 
