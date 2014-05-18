@@ -15,7 +15,7 @@ mongoose.connect(mongoUri, function (err, res) {
     } else {
         console.log("Successfully connected to " + mongoUri + ".");
     }
-}
+});
 
 var twilio = require('twilio');
 
