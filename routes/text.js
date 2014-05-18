@@ -6,6 +6,7 @@ var utilities = require('../utilities');
 
 /* Redirect based on response . */
 router.post('/', function(req, res) {
+  console.log(req);
   var body = req.param('Body').trim();
   console.log(body);
 });
