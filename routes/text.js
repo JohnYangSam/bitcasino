@@ -11,6 +11,9 @@ router.post('/', function(req, res) {
   var from = req.param('From').trim();
 
 
+console.log(body);
+console.log(to);
+console.log(from);
   client.sendMessage({
         to: to,
         from: from,
