@@ -25,7 +25,7 @@ router.post('/', function(req, res) {
     console.log(twiml);
     console.log("--------sent back----------");
 
-    res.send(twiml);
+    res.send(twiml.toStringI());
     //res.send('wowo');
   //} else {
   //  console.log("--------bad request----------");
