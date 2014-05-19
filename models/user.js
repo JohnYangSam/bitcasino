@@ -38,12 +38,29 @@ userSchema.methods.addBalance = function(amount, cb) {
   } else {
     this.balance += amount;
     this.save(cb);
+    this.sendBalanceUpdatedText();
   }
 };
 
 userSchema.methods.sendBalanceUpdatedText = function(){
 
-}
+};
+
+userSchema.methods.cashOut = function(address){
+ var options = {
+    host: 'blockchain.info',
+    path: 'http://blockchain.info/merchant/'
+        + '88654f1e-6cb8-4fb8-b0cd-5b1d91853f74'
+        + '/payment?password=ThisIsTheBitCasino!!!!!'
+        + 'to=' + address
+        + '&amount=' + balance
+    method: 'GET',
+  };
+  user = this;
+  getJSON(options, function(statusCode, response){
+
+  });
+};
 
 
 userSchema.methods.generateAddress = function(){
