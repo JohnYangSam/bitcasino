@@ -45,6 +45,34 @@ function handleText(req, res) {
       // Error on look up
       if (err) {
         console.log("Error looking up user " + err);
+      } else {
+
+        // Create a new User
+        if (user === null) {
+
+
+          var newUser = new User({
+            number: from,
+            balance: 0,
+            btcAddress: null
+          });
+          newUser.save(function(err, user) {
+            if (err) {
+              console.log("Error saving new user." + err);
+            } else {
+              console.log("Successfully saved new user." + user);
+            }
+          });
+          console.log(newUser);
+          user.generateAddress();
+        // Otherwise, parse the commands
+        } else {
+
+        }
+        console.log("users is here" + user);
+        //
+      }
+    });
 
       // If there is no user
       } else if (req.user === null) {
@@ -150,7 +178,7 @@ function respondToCommand(req, res, user) {
 
 // Respond by sending a Twmil sms message response
 function sendSmsMessage(req, res, msg) {
-  // Create new Twmil response  
+  // Create new Twmil response
   var twiml = new req.twilio.TwimlResponse();
   twiml.sms(msg);
   console.log("--------Twiml response sending back ----------");
