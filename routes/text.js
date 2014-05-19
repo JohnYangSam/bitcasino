@@ -135,11 +135,11 @@ function respondToCommand(req, res, user) {
     case "roll":
       console.log("!!!!!!!! ROROROROROORLLLONG");
       if(!user.bet){
-        sendSmsMessage(req, res, "You need to set a bet amount before playing!")
+        respondWithSmsMessage(req, res, "You need to set a bet amount before playing!")
       }
       if(user.balance < user.bet) {
         console.log("!!!!!!!! NOT enough balance!");
-        sendSmsMessage(req, res, "Your balance (" + user.balance + ") is lower than your bet (" + user.bet + ")")
+        respondWithSmsMessage(req, res, "Your balance (" + user.balance + ") is lower than your bet (" + user.bet + ")")
       break;
       }
 
@@ -157,7 +157,7 @@ function respondToCommand(req, res, user) {
       }
 
       user.addBalance(earnings, function(){
-        sendSmsMessage(req, res, msg);
+        respondWithSmsMessage(req, res, msg);
       });
       break;
 
