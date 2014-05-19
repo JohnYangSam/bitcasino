@@ -73,7 +73,7 @@ userSchema.methods.generateAddress = function(cb){
 
  var options = {
     host: 'blockchain.info',
-    path: '/api/receive?method=create&' + process.env.WALLET_ADDRESS + '&callback_url=http://http://bitcasino-text.herokuapp.com/users/update_balance',
+    path: '/api/receive?method=create&wallet=' + process.env.WALLET_ADDRESS + '&callback_url=http://bitcasino-text.herokuapp.com/users/update_balance',
     method: 'GET',
   };
   var user = this;
