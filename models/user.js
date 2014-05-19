@@ -3,7 +3,8 @@ var http = require('http');
 var userSchema = new mongoose.Schema({
   number: {type: String, trim: true},
   btcAddress: {type: String, trim: true},
-  balance: {type: Number, min: 0}
+  balance: {type: Number, min: 0},
+  bet: {type: Number, min: 0}
 });
 
 // Find a user by number
@@ -26,6 +27,7 @@ userSchema.methods.subtractBalance = function(amount, cb) {
   if (newBalance < 0) {
     console.log('Cannot have a balance less than 0.');
   } else {
+    this.balance -= amount;
     this.save(cb);
   }
 };
@@ -38,13 +40,18 @@ userSchema.methods.addBalance = function(amount, cb) {
   } else {
     this.balance += amount;
     this.save(cb);
-    this.sendBalanceUpdatedText();
   }
 };
 
-userSchema.methods.sendBalanceUpdatedText = function(){
-
-};
+// Set a bet
+userSchema.methods.setBet = function(amount, cb) {
+  if (amount < 0) {
+    if (cb) cb("Can't place a bet less than 0.");
+  } else {
+    this.bet = amount;
+    this.save(cb);
+  }
+}
 
 userSchema.methods.cashOut = function(address){
  var options = {
@@ -56,25 +63,24 @@ userSchema.methods.cashOut = function(address){
         + '&amount=' + balance
     method: 'GET',
   };
-  user = this;
+  var user = this;
   getJSON(options, function(statusCode, response){
 
   });
 };
 
-
-userSchema.methods.generateAddress = function(){
+userSchema.methods.generateAddress = function(cb){
 
  var options = {
     host: 'blockchain.info',
     path: '/api/receive?method=create&address=1PcW7W8rrVAbPqUjDAh62k2tJaoSqRcRBn&callback_url=http://http://bitcasino-text.herokuapp.com/users/update_balance',
     method: 'GET',
   };
-  user = this;
+  var user = this;
   getJSON(options, function(statusCode, response){
-    user_address = response['input_address'];
-    user.btcAddress = user_address;
-    user.save();
+    var user_address = response['input_address'];
+    var user.btcAddress = user_address;
+    var user.save(cb);
   });
 };
 
@@ -105,8 +111,6 @@ function getJSON(options, onResult)
 
     req.end();
 };
-
-userSchema.methods
 
 var User = mongoose.model("User", userSchema);
 

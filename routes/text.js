@@ -5,7 +5,7 @@ var User = require('../models/user');
 
 var helpMessage = "Options:\n\n" +
           "balance\n" +
-          "bet [mBTC amount]\n" +
+          "bet [satoshi amount]\n" +
           "roll\n" +
           "withdraw [BTC address]\n"+
           "info\n" +
@@ -121,16 +121,18 @@ function respondToCommand(req, res, user) {
   switch(cmd) {
     case "bet":
       if (args.length !== 2) {
-        sendSmsMessage(req, res, "bet [mBTC amount] requires two arguments");
+        sendSmsMessage(req, res, "bet [satoshi amount] requires two arguments");
       } else if (!utilities.isInt(args[1])) {
-        sendSmsMessage(req, res, "bet [mBTC amount] requires an integer argument");
+        sendSmsMessage(req, res, "bet [satoshi amount] requires an integer argument");
       } else {
-        /*
-        user.setBet(args[1], function() {
-          sendSmsMessage(req, res, "Your bet is set to " + args[1] + 
-            " mBTC per a die role");
+        user.setBet(args[1], function(err) {
+          if (err) {
+            sendSmsMessage(req, res, "Error placing bet: " + err);
+          } else {
+            sendSmsMessage(req, res, "Your bet is set to " + args[1] + 
+              " satoshi per a die role");
+          }
         });
-        */
       }
       break;
 
@@ -140,7 +142,7 @@ function respondToCommand(req, res, user) {
       } else {
       /*
         user.withdraw(args[1], function(amount) { 
-          sendSmsMessage(req, res, "withdrawing X mBTC to address. It should arrive shortly.");
+          sendSmsMessage(req, res, "withdrawing X satoshi to address. It should arrive shortly.");
         });
       */
       }
