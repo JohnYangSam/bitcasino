@@ -11,8 +11,8 @@ var helpMessage = function(user) {
           "roll\n" +
           "withdraw [BTC address]\n"+
           "game\n" +
-          "deposit\n";
-          "options",
+          "deposit\n" +
+          "options";
 
    if (user) msg += "\n\nDeposit Address: " + user.btcAddress;
    return msg;
