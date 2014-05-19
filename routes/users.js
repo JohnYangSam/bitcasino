@@ -25,7 +25,7 @@ router.get('/update_balance', function(req, res) {
       } else {
         console.log("Balanced increased.");
         console.log(user.balance);
-        sendSmsMessageToUser(user, "Balance increased by " + amount + " to " + user.balance + " ");
+        sendSmsMessageToUser(user, "Balance increased by " + amount + " to " + user.balance + " satoshi.");
       }
     });
   });

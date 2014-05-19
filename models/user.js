@@ -53,7 +53,7 @@ userSchema.methods.setBet = function(amount, cb) {
   }
 }
 
-userSchema.methods.cashOut = function(address){
+userSchema.methods.withdraw = function(address){
  var options = {
     host: 'blockchain.info',
     path: 'http://blockchain.info/merchant/'
