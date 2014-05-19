@@ -19,8 +19,8 @@ var helpMessage = function(user) {
 };
 
 var infoMessage = "Bitcasino is a simple game. Deposit satoshi to your address." +
-                  " Roll the dice. Higher roll takes all. House wins ties. Short cuts " +
-                  " are in \"()'s\"";
+                  " Roll the dice. Higher roll takes all. House wins ties.\nShort cuts " +
+                  " are in \"()'s\".\nDeposits may take a couple hours to confirm on the blockchain.";
 
 /* Redirect based on response . */
 router.post('/', function(req, res){
