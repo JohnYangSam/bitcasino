@@ -7,9 +7,9 @@ var helpMessage = "Options:\n" +
           "balance\n" +
           "bet [mBTC amount]\n" +
           "roll\n" +
-          "withdraw [mBTC amount]\n\n"+
+          "withdraw [mBTC amount]\n"+
           "info\n" +
-          "options\n" +
+          "options\n\n" +
           "Deposit Address: XXXX XXXX XXXXXXXXX.";
 
 /* Redirect based on response . */
