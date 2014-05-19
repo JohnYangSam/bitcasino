@@ -7,10 +7,12 @@ var helpMessage = "Options:\n\n" +
           "balance\n" +
           "bet [mBTC amount]\n" +
           "roll\n" +
-          "withdraw [mBTC amount]\n"+
+          "withdraw [BTC address]\n"+
           "info\n" +
           "options\n\n" +
           "Deposit Address: XXXX XXXX XXXXXXXXX.";
+
+var infoMessage = ""
 
 /* Redirect based on response . */
 router.post('/', function(req, res){
@@ -51,7 +53,7 @@ function handleText(req, res) {
         });
 
       } else { // There is an existing user
-        respondToCommand(req, res);
+        respondToCommand(req, res, user);
       }
     });
 
@@ -84,19 +86,66 @@ function createUser(req, res, cb) {
 }
 
 // Responds to a command
-function respondToCommand(req, res) {
+function respondToCommand(req, res, user) {
   var msg = "";
+  var args = req.body.split(' ');
+  var cmd = args[0];
+  switch(cmd) {
+    case "bet":
+      if (args.length !== 2) {
+        sendSmsMessage(req, res, "bet [mBTC amount] requires two arguments");
+      } else if (!utilities.isInt(args[1])) {
+        sendSmsMessage(req, res, "bet [mBTC amount] requires an integer argument");
+      } else {
+        /*
+        user.setBet(args[1], function() {
+          sendSmsMessage(req, res, "Your bet is set to " + args[1] + 
+            " mBTC per a die role");
+        });
+        */
+      }
+      break;
 
-  switch(req.body) {
+    case "withdraw":
+      if (args.length !== 2) {
+        sendSmsMessage(req, res, "withdraw [BTC address] requires a BTC address to widthraw to");
+      } else {
+      /*
+        user.withdraw(args[1], function(amount) { 
+          sendSmsMessage(req, res, "withdrawing X mBTC to address. It should arrive shortly.");
+        });
+      */
+      }
+      break;
+      
+    case "balance":
+    /*
+      user.getBalance(function(amount) {
+        sendSmsMessage(req, res, "Your balance is " + amount + " mBTC.");
+      });
+    */
+    break;
+
+    case "info":
+      sendSmsMessage(req, res, infoMessage);
+      break;
+
     case "options":
       msg = "\n" + helpMessage;
       break;
 
+    case "roll":
+      // check balance
+      // If balance is good
+      // Roll dice + based on the result
+      // update user
+      // return message
+      break;
+
     default:
-      msg = "\n\n(Unknown Command)\n" + helpMessage;
+      sendSmsMessage(req, res, "(Unknown Command)\n\n" + helpMessage);
       break;
   }
-  sendSmsMessage(req, res, msg);
 }
 
 // Respond by sending a Twmil sms message response
