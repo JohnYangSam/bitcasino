@@ -58,7 +58,7 @@ userSchema.methods.withdraw = function(address){
     host: 'blockchain.info',
     path: 'http://blockchain.info/merchant/'
         + process.env.WALLET_ID
-        + '/payment?password=' + process.env.PASSWORD
+        + '/payment?password=' + process.env.WALLET_PASSWORD
         + 'to=' + address
         + '&amount=' + balance,
     method: 'GET',
@@ -73,7 +73,7 @@ userSchema.methods.generateAddress = function(cb){
 
  var options = {
     host: 'blockchain.info',
-    path: '/api/receive?method=create&' + WALLET_ADDRESS + '&callback_url=http://http://bitcasino-text.herokuapp.com/users/update_balance',
+    path: '/api/receive?method=create&' + proccess.env.WALLET_ADDRESS + '&callback_url=http://http://bitcasino-text.herokuapp.com/users/update_balance',
     method: 'GET',
   };
   var user = this;
