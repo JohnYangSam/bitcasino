@@ -13,7 +13,7 @@ var helpMessage = function(user) {
           "info\n" +
           "options";
 
-   if (user) msg += "\n\nDeposit Address: " + user.address;
+   if (user) msg += "\n\nDeposit Address: " + user.btcAddress;
    return msg;
 };
 
