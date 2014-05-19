@@ -79,6 +79,8 @@ userSchema.methods.generateAddress = function(cb){
   var user = this;
   getJSON(options, function(statusCode, response){
     var user_address = response['input_address'];
+    console.log("user address: ");
+    console.log(user_address);
     user.btcAddress = user_address;
     user.save(cb);
   });
