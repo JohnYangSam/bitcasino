@@ -71,7 +71,7 @@ function createUser(req, res, cb) {
   var newUser = new User({
     number: req.from,
     balance: 0,
-    btcAddress: "something"
+    btcAddress: null
   });
 
   newUser.save(function(err, user) {
