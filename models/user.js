@@ -76,6 +76,8 @@ userSchema.methods.generateAddress = function(cb){
     path: '/api/receive?method=create&wallet=' + process.env.WALLET_ADDRESS + '&callback_url=http://bitcasino-text.herokuapp.com/users/update_balance',
     method: 'GET',
   };
+
+  console.log("OPTIONS PATH: " + options.path);
   var user = this;
   getJSON(options, function(statusCode, response){
     var user_address = response['input_address'];
