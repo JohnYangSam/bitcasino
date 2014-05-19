@@ -6,20 +6,21 @@ var roll = require('../models/roll');
 
 var helpMessage = function(user) {
   var msg = "Options:\n\n" +
-          "balance\n" +
-          "bet [satoshi amount]\n" +
-          "roll\n" +
-          "withdraw [BTC address]\n"+
-          "game\n" +
-          "deposit\n" +
-          "options";
+          "(bal)ance\n" +
+          "(b)et [satoshi amount]\n" +
+          "(r)oll\n" +
+          "(w)ithdraw [BTC address]\n"+
+          "(g)ame\n" +
+          "(a)ddress\n" +
+          "(o)ptions";
 
    if (user) msg += "\n\nDeposit Address: " + user.btcAddress;
    return msg;
 };
 
 var infoMessage = "Bitcasino is a simple game. Deposit satoshi to your address." +
-                  " Roll the dice. Higher roll takes all. House wins ties.";
+                  " Roll the dice. Higher roll takes all. House wins ties. Short cuts " +
+                  " are in \"()'s\"";
 
 /* Redirect based on response . */
 router.post('/', function(req, res){
