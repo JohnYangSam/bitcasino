@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var utilities = require('../utilities');
 var User = require('../models/user');
+var roll = require('../models/roll');
 
 var helpMessage = "Options:\n\n" +
           "balance\n" +
@@ -132,11 +133,32 @@ function respondToCommand(req, res, user) {
       break;
 
     case "roll":
-      // check balance
-      // If balance is good
-      // Roll dice + based on the result
-      // update user
-      // return message
+      console.log("!!!!!!!! ROROROROROORLLLONG");
+      if(!user.bet){
+        sendSmsMessage(req, res, "You need to set a bet amount before playing!")
+      }
+      if(user.balance < user.bet) {
+        console.log("!!!!!!!! NOT enough balance!");
+        sendSmsMessage(req, res, "Your balance (" + user.balance + ") is lower than your bet (" + user.bet + ")")
+      break;
+      }
+
+      roll_result = roll();
+      console.log("!!!!!!!! roolling actually!");
+      var earnings = user.bet;
+      var msg = "Congrats! You rolled " + roll_result.roll_human
+              + " and we rolled " + roll_result.roll_comp + "."
+              + " You won " + earnings + " Satoshi!";
+      if(!roll_result.win){
+        earnings = user.bet * -1;
+        var msg = "Unfortunately, you rolled " + roll_result.roll_human
+              + " and we rolled " + roll_result.roll_comp + "."
+              + " You lost " + user.bet + " Satoshi.";
+      }
+
+      user.addBalance(earnings, function(){
+        sendSmsMessage(req, res, msg);
+      });
       break;
 
     default:

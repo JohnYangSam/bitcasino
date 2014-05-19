@@ -23,13 +23,13 @@ router.get('/update_balance', function(req, res) {
       if (err) {
         console.log("Error looking up user " + err);
       } else {
+        res.send(200);
         console.log("Balanced increased.");
         console.log(user.balance);
         sendSmsMessageToUser(user, "Balance increased by " + amount + " to " + user.balance + " satoshi.");
       }
     });
   });
-  res.send(200);
 });
 
 // Send an sms message to the user with a given message
