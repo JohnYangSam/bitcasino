@@ -3,7 +3,7 @@ var router = express.Router();
 var utilities = require('../utilities');
 var User = require('../models/user');
 
-var helpMessage = "Options:\n" +
+var helpMessage = "Options:\n\n" +
           "balance\n" +
           "bet [mBTC amount]\n" +
           "roll\n" +
