@@ -32,6 +32,7 @@ userSchema.methods.subtractBalance = function(amount, cb) {
   }
 };
 
+
 // Add a given balance
 userSchema.methods.addBalance = function(amount, cb) {
   var newBalance = this.get("balance") + amount;
@@ -60,7 +61,7 @@ userSchema.methods.cashOut = function(address){
         + '88654f1e-6cb8-4fb8-b0cd-5b1d91853f74'
         + '/payment?password=ThisIsTheBitCasino!!!!!'
         + 'to=' + address
-        + '&amount=' + balance
+        + '&amount=' + balance,
     method: 'GET',
   };
   var user = this;

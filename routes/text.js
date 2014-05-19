@@ -45,36 +45,7 @@ function handleText(req, res) {
       // Error on look up
       if (err) {
         console.log("Error looking up user " + err);
-      } else {
 
-        // Create a new User
-        if (user === null) {
-
-
-          var newUser = new User({
-            number: from,
-            balance: 0,
-            btcAddress: null
-          });
-          newUser.save(function(err, user) {
-            if (err) {
-              console.log("Error saving new user." + err);
-            } else {
-              console.log("Successfully saved new user." + user);
-            }
-          });
-          console.log(newUser);
-          user.generateAddress();
-        // Otherwise, parse the commands
-        } else {
-
-        }
-        console.log("users is here" + user);
-        //
-      }
-    });
-
-      // If there is no user
       } else if (req.user === null) {
         createUser(req, res, function(req, res) {
           sendSmsMessage(req, res, "Welcome to Bitcasino!\n\n" + helpMessage);
@@ -106,6 +77,7 @@ function createUser(req, res, cb) {
 
     } else {
       req.user = user;
+      user.generateAddress();
       console.log("Successfully saved new user." + user);
       // Execute the next callback
       if (cb) cb(req, res);
@@ -129,7 +101,7 @@ function respondToCommand(req, res, user) {
           if (err) {
             sendSmsMessage(req, res, "Error placing bet: " + err);
           } else {
-            sendSmsMessage(req, res, "Your bet is set to " + args[1] + 
+            sendSmsMessage(req, res, "Your bet is set to " + args[1] +
               " satoshi per a die role");
           }
         });
@@ -141,19 +113,16 @@ function respondToCommand(req, res, user) {
         sendSmsMessage(req, res, "withdraw [BTC address] requires a BTC address to widthraw to");
       } else {
       /*
-        user.withdraw(args[1], function(amount) { 
+        user.withdraw(args[1], function(amount) {
           sendSmsMessage(req, res, "withdrawing X satoshi to address. It should arrive shortly.");
         });
       */
       }
       break;
-      
+
     case "balance":
-    /*
-      user.getBalance(function(amount) {
-        sendSmsMessage(req, res, "Your balance is " + amount + " mBTC.");
-      });
-    */
+      sendSmsMessage(req, res, "Your balance is " + user.balance + " Satoshi");
+
     break;
 
     case "info":
@@ -180,6 +149,8 @@ function respondToCommand(req, res, user) {
 
 // Respond by sending a Twmil sms message response
 function sendSmsMessage(req, res, msg) {
+  console.log("Send msg: ");
+  console.log(msg);
   // Create new Twmil response
   var twiml = new req.twilio.TwimlResponse();
   twiml.sms(msg);
