@@ -32,7 +32,6 @@ userSchema.methods.subtractBalance = function(amount, cb) {
   }
 };
 
-
 // Add a given balance
 userSchema.methods.addBalance = function(amount, cb) {
   var newBalance = this.get("balance") + amount;

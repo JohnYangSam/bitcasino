@@ -121,7 +121,8 @@ function respondToCommand(req, res, user) {
       break;
 
     case "balance":
-      sendSmsMessage(req, res, "Your balance is " + user.balance + " Satoshi");
+      // As long as we don't update anything, we don't need a callback
+      sendSmsMessage(req, res, "Your balance is " + user.balance + " Satoshi.");
 
     break;
 
