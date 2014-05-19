@@ -4,14 +4,18 @@ var utilities = require('../utilities');
 var User = require('../models/user');
 var roll = require('../models/roll');
 
-var helpMessage = "Options:\n\n" +
+var helpMessage = function(user) {
+  var msg = "Options:\n\n" +
           "balance\n" +
           "bet [satoshi amount]\n" +
           "roll\n" +
           "withdraw [BTC address]\n"+
           "info\n" +
-          "options\n\n" +
-          "Deposit Address: XXXX XXXX XXXXXXXXX.";
+          "options";
+
+   if (user) msg += "\n\nDeposit Address: " + user.address;
+   return msg;
+};
 
 var infoMessage = "Bitcasino is a simple game. Deposit satoshi to your address." +
                   " Roll the dice. Higher roll takes all. House wins ties.";
@@ -47,7 +51,7 @@ function handleText(req, res) {
 
       } else if (req.user === null) {
         createUser(req, res, function(req, res) {
-          respondWithSmsMessage(req, res, "Welcome to Bitcasino!\n\n" + helpMessage);
+          respondWithSmsMessage(req, res, "Welcome to Bitcasino!\n\n" + helpMessage(user));
         });
 
       } else { // There is an existing user
@@ -124,12 +128,13 @@ function respondToCommand(req, res, user) {
       respondWithSmsMessage(req, res, "Your balance is " + user.balance + " Satoshi.");
       break;
 
-    case "info":
+    case "game":
       respondWithSmsMessage(req, res, infoMessage);
       break;
 
+    case "option":
     case "options":
-      msg = "\n" + helpMessage;
+      msg = "\n" + helpMessage(user);
       break;
 
     case "roll":
@@ -162,7 +167,7 @@ function respondToCommand(req, res, user) {
       break;
 
     default:
-      respondWithSmsMessage(req, res, "(Unknown Command)\n\n" + helpMessage);
+      respondWithSmsMessage(req, res, "(Unknown Command)\n\n" + helpMessage(user));
       break;
   }
 }
