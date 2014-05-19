@@ -148,7 +148,7 @@ function respondToCommand(req, res, user) {
     case "o":
     case "option":
     case "options":
-      respondWithSmsMessage("\n" + helpMessage(user));
+      respondWithSmsMessage(req, res, "\n" + helpMessage(user));
       break;
 
     case "r":
