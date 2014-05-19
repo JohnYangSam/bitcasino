@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var twilio = require('twilio');
+var client = new twilio.RestClient(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 
 /* GET users listing. */
 router.get('/', function(req, res) {
@@ -22,11 +24,22 @@ router.get('/update_balance', function(req, res) {
         console.log("Error looking up user " + err);
       } else {
         console.log("Balanced increased.");
-        user.sendBalanceUpdatedText();
         console.log(user.balance);
+        sendSmsMessageToUser(user, "Balance increased by " + amount + " to " + user.balance + " ");
       }
     });
   });
   res.send(200);
 });
+
+// Send an sms message to the user with a given message
+// and following call back
+function sendSmsMessageToUser(user, message, cb) {
+  client.sms.messages.create({
+    to: user.number,
+    from: process.env.TWILIO_NUMBER,
+    body: message
+  }, cb);
+}
+
 module.exports = router;

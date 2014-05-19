@@ -12,18 +12,16 @@ var helpMessage = "Options:\n\n" +
           "options\n\n" +
           "Deposit Address: XXXX XXXX XXXXXXXXX.";
 
-var infoMessage = ""
+var infoMessage = "Bitcasino is a simple game. Deposit satoshi to your address." +
+                  " Roll the dice. Higher roll takes all. House wins ties.";
 
 /* Redirect based on response . */
 router.post('/', function(req, res){
   handleText(req, res);
 });
+
+/* Use this route for testing */
 router.get('/', function(req, res){
-  /*
-  req.to = "000 000 0000";
-  req.from = "111 111 1111";
-  req.body = "tester";
-  */
   handleText(req, res);
 });
 
@@ -48,7 +46,7 @@ function handleText(req, res) {
 
       } else if (req.user === null) {
         createUser(req, res, function(req, res) {
-          sendSmsMessage(req, res, "Welcome to Bitcasino!\n\n" + helpMessage);
+          respondWithSmsMessage(req, res, "Welcome to Bitcasino!\n\n" + helpMessage);
         });
 
       } else { // There is an existing user
@@ -93,15 +91,15 @@ function respondToCommand(req, res, user) {
   switch(cmd) {
     case "bet":
       if (args.length !== 2) {
-        sendSmsMessage(req, res, "bet [satoshi amount] requires two arguments");
+        respondWithSmsMessage(req, res, "bet [satoshi amount] requires two arguments");
       } else if (!utilities.isInt(args[1])) {
-        sendSmsMessage(req, res, "bet [satoshi amount] requires an integer argument");
+        respondWithSmsMessage(req, res, "bet [satoshi amount] requires an integer argument");
       } else {
         user.setBet(args[1], function(err) {
           if (err) {
-            sendSmsMessage(req, res, "Error placing bet: " + err);
+            respondWithSmsMessage(req, res, "Error placing bet: " + err);
           } else {
-            sendSmsMessage(req, res, "Your bet is set to " + args[1] +
+            respondWithSmsMessage(req, res, "Your bet is set to " + args[1] +
               " satoshi per a die role");
           }
         });
@@ -110,11 +108,11 @@ function respondToCommand(req, res, user) {
 
     case "withdraw":
       if (args.length !== 2) {
-        sendSmsMessage(req, res, "withdraw [BTC address] requires a BTC address to widthraw to");
+        respondWithSmsMessage(req, res, "withdraw [BTC address] requires a BTC address to widthraw to");
       } else {
       /*
         user.withdraw(args[1], function(amount) {
-          sendSmsMessage(req, res, "withdrawing X satoshi to address. It should arrive shortly.");
+          respondWithSmsMessage(req, res, "withdrawing X satoshi to address. It should arrive shortly.");
         });
       */
       }
@@ -122,12 +120,11 @@ function respondToCommand(req, res, user) {
 
     case "balance":
       // As long as we don't update anything, we don't need a callback
-      sendSmsMessage(req, res, "Your balance is " + user.balance + " Satoshi.");
-
-    break;
+      respondWithSmsMessage(req, res, "Your balance is " + user.balance + " Satoshi.");
+      break;
 
     case "info":
-      sendSmsMessage(req, res, infoMessage);
+      respondWithSmsMessage(req, res, infoMessage);
       break;
 
     case "options":
@@ -143,13 +140,13 @@ function respondToCommand(req, res, user) {
       break;
 
     default:
-      sendSmsMessage(req, res, "(Unknown Command)\n\n" + helpMessage);
+      respondWithSmsMessage(req, res, "(Unknown Command)\n\n" + helpMessage);
       break;
   }
 }
 
 // Respond by sending a Twmil sms message response
-function sendSmsMessage(req, res, msg) {
+function respondWithSmsMessage(req, res, msg) {
   console.log("Send msg: ");
   console.log(msg);
   // Create new Twmil response
