@@ -3,12 +3,14 @@ var router = express.Router();
 var utilities = require('../utilities');
 var User = require('../models/user');
 
-var helpMessage = "Actions:\n" +
+var helpMessage = "Options:\n" +
           "balance\n" +
-          "bet <# satoshi>\n" +
+          "bet [mBTC amount]\n" +
           "roll\n" +
-          "withdraw <# satoshi>\n\n"+
-          "Send to XX address to deposit.";
+          "withdraw [mBTC amount]\n\n"+
+          "info\n" +
+          "options\n" +
+          "Deposit Address: XXXX XXXX XXXXXXXXX.";
 
 /* Redirect based on response . */
 router.post('/', function(req, res){
@@ -45,7 +47,7 @@ function handleText(req, res) {
       // If there is no user
       } else if (req.user === null) {
         createUser(req, res, function(req, res) {
-          sendSmsMessage(req, "Welcome to Bitcasino!\n\n + helpMessage");
+          sendSmsMessage(req, res, "Welcome to Bitcasino!\n\n" + helpMessage);
         });
 
       } else { // There is an existing user
@@ -94,11 +96,11 @@ function respondToCommand(req, res) {
       msg = "\n\n(Unknown Command)\n" + helpMessage;
       break;
   }
-  sendSmsMessage(res, msg);
+  sendSmsMessage(req, res, msg);
 }
 
 // Respond by sending a Twmil sms message response
-function sendSmsMessage(res, msg) {
+function sendSmsMessage(req, res, msg) {
   // Create new Twmil response  
   var twiml = new req.twilio.TwimlResponse();
   twiml.sms(msg);
