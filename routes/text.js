@@ -10,8 +10,9 @@ var helpMessage = function(user) {
           "bet [satoshi amount]\n" +
           "roll\n" +
           "withdraw [BTC address]\n"+
-          "info\n" +
-          "options";
+          "game\n" +
+          "deposit\n";
+          "options",
 
    if (user) msg += "\n\nDeposit Address: " + user.btcAddress;
    return msg;
@@ -94,6 +95,7 @@ function respondToCommand(req, res, user) {
   var args = req.body.split(' ');
   var cmd = args[0];
   switch(cmd) {
+    case "b":
     case "bet":
       if (args.length !== 2) {
         respondWithSmsMessage(req, res, "bet [satoshi amount] requires two arguments");
@@ -110,7 +112,7 @@ function respondToCommand(req, res, user) {
         });
       }
       break;
-
+    case "w":
     case "withdraw":
       if (args.length !== 2) {
         respondWithSmsMessage(req, res, "withdraw [BTC address] requires a BTC address to widthraw to");
@@ -123,20 +125,31 @@ function respondToCommand(req, res, user) {
       }
       break;
 
+    case "bal":
     case "balance":
       // As long as we don't update anything, we don't need a callback
       respondWithSmsMessage(req, res, "Your balance is " + user.balance + " Satoshi.");
       break;
 
+    case "g":
     case "game":
       respondWithSmsMessage(req, res, infoMessage);
       break;
 
+    case "d":
+    case "deposit":
+    case "a":
+    case "address":
+      respondWithSmsMessage(req, res, user.btcAddress);
+    break;
+
+    case "o":
     case "option":
     case "options":
       msg = "\n" + helpMessage(user);
       break;
 
+    case "r":
     case "roll":
       console.log("!!!!!!!! ROROROROROORLLLONG");
       if(!user.bet){
