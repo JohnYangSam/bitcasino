@@ -1,8 +1,120 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 24px;
+  color: #3882cd;
 }
 
-a {
-  color: #00B7FF;
+.container {
+  width: 900px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.subcontainer {
+  width: 600px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.jumbotron {
+  background-color: #3882cd;
+  color: #ffffff;
+  height: 180px;
+  text-align: center;
+  padding: 100px 0px;
+  margin-bottom: 50px;
+}
+
+.jumbotron .title {
+  font-size: 70px;
+  margin-bottom: 20px;
+}
+
+.jumbotron .title img {
+  height: 80px;
+  position: relative;
+  top: 15px;
+  margin-right: 15px;
+}
+
+.jumbotron .description {
+  font-size: 32px;
+  font-weight: 300;
+}
+
+.content .title {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.content .title a {
+  color: #3882cd;
+  text-decoration: none;
+  border-bottom: 3px solid #3882cd;
+}
+
+.content .title a:hover {
+  color: #255c93;
+  border-bottom: 3px solid #255c93;
+}
+
+.content .hr {
+  margin: 50px 0px;
+  width: 100%;
+  height: 100px;
+  background-size: auto 100px;
+  background-repeat: repeat-x;
+  background-image: url("/images/bitcasino-skyline.png")
+}
+
+.content ol {
+  list-style-type: none;
+  margin-left: -5px;
+  counter-reset: li-counter;
+}
+
+.content ol > li {
+  position: relative;
+  margin-bottom: 30px;
+  padding-left: 20px;
+}
+
+.content ol > li:before {
+  position: absolute;
+  left: -35px;
+  width: 35px;
+  font-weight: bold;
+  background-color: #3882cd;
+  text-align: center;
+  color: #ffffff;
+  content: counter(li-counter);
+  counter-increment: li-counter;
+}
+
+.footer {
+  background-color: #3882cd;
+  color: #ffffff;
+  text-align: center;
+  padding: 50px 0px;
+  margin-top: 50px;
+  font-weight: 300;
+}
+
+.footer a {
+  font-weight: 600;
+  color: #b2ceeb;
+  text-decoration: none;
+  border-bottom: 3px solid #b2ceeb;
+}
+
+.footer a:hover {
+  color: #ffffff;
+  border-bottom: 3px solid #ffffff;
+}
+
+.footer .note {
+  font-size: 20px;
+  margin-top: 30px;
 }
