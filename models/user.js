@@ -56,7 +56,7 @@ userSchema.methods.setBet = function(amount, cb) {
 userSchema.methods.withdraw = function(address){
  var options = {
     host: 'blockchain.info',
-    path: 'http://blockchain.info/merchant/'
+    path: 'https://blockchain.info/merchant/'
         + process.env.WALLET_ID
         + '/payment?password=' + process.env.WALLET_PASSWORD
         + 'to=' + address
@@ -73,7 +73,7 @@ userSchema.methods.generateAddress = function(cb){
 
  var options = {
     host: 'blockchain.info',
-    path: '/api/receive?method=create&address=' + process.env.WALLET_ADDRESS + '&callback_url=http%3A%2F%2Fbitcasino-text.herokuapp.com%2Fusers%2Fupdate_balance',
+    path: '/api/receive?method=create&address=' + process.env.WALLET_ADDRESS + '&callback=http%3A%2F%2Fbitcasino-text.herokuapp.com%2Fusers%2Fupdate_balance',
     method: 'GET',
   };
 
