@@ -11,6 +11,12 @@ router.get('/', function(req, res) {
 });
 
 router.get('/update_balance', function(req, res) {
+  var secret = req.param('secret').trim();
+  if (secret != process.env.SECRET) {
+    console.log("Secret: " + secret + " is incorrect!");
+    req.send("Buzz off. You are not authorized to use is endpoint.");
+    return;
+  }
 
   var amount = parseInt(req.param('value').trim());
   var address = req.param('input_address').trim();
